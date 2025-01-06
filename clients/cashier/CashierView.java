@@ -26,6 +26,7 @@ public class CashierView implements Observer
   private final JLabel      pageTitle  = new JLabel();
   private final JLabel      theAction  = new JLabel();
   private final JTextField  theInput   = new JTextField();
+  private final JTextField  buyQuantity   = new JTextField();
   private final JTextArea   theOutput  = new JTextArea();
   private final JScrollPane theSP      = new JScrollPane();
   private final JButton     theBtCheck = new JButton( CHECK );
@@ -69,7 +70,7 @@ public class CashierView implements Observer
     
     theBtCheck.setBounds( 16, 25+60*0, 80, 40 );    // Check Button
     theBtCheck.addActionListener(                   // Call back code
-      e -> cont.doCheck( theInput.getText() ) );
+      e -> cont.doCheck( theInput.getText(), Integer.parseInt(buyQuantity.getText()) ) ); // amount to buy
     cp.add( theBtCheck );                           //  Add to canvas
     theBtCheck.setBackground(new Color(253, 139, 81)); // Colour (Orange)
     
@@ -89,10 +90,16 @@ public class CashierView implements Observer
     theAction.setText( "" );                        // Blank
     cp.add( theAction );                            //  Add to canvas
 
-    theInput.setBounds( 110, 50, 270, 40 );         // Input Area
+    theInput.setBounds( 110, 50, 170, 40 );         // Input Area
     theInput.setText("");                           // Blank
     cp.add( theInput );                             //  Add to canvas
     theInput.setBackground(new Color(242, 229, 191)); // Colour (Beige)
+    
+    //                      x   y  length  hight
+    buyQuantity.setBounds( 300, 50, 80, 40 );         // Input Area
+    buyQuantity.setText("1");                           // Blank
+    cp.add( buyQuantity );                             //  Add to canvas
+    buyQuantity.setBackground(new Color(242, 229, 191)); // Colour (Beige)
     
     theSP.setBounds( 110, 100, 270, 160 );          // Scrolling pane
     theOutput.setText( "" );                        //  Blank
@@ -132,6 +139,10 @@ public class CashierView implements Observer
       theOutput.setText( basket.getDetails() );
     
     theInput.requestFocus();               // Focus is here
+    
+    if(message.equals("!!! Not in stock") || message.contains("Purchased")) {
+    	buyQuantity.setText("1");
+    }
   }
 
 }

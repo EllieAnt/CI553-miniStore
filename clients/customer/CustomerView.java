@@ -11,6 +11,8 @@ import middle.StockReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,7 +20,8 @@ import java.util.Observer;
  * Implements the Customer view.
  */
 
-public class CustomerView implements Observer
+//public class CustomerView implements Observer
+public class CustomerView implements PropertyChangeListener
 {
   class Name                              // Names of buttons
   {
@@ -38,6 +41,7 @@ public class CustomerView implements Observer
   private final JButton     theBtCheck = new JButton( Name.CHECK );
   private final JButton     theBtClear = new JButton( Name.CLEAR );
   private final JButton     theBtCheckName = new JButton( Name.CHECKNAME );
+  private CustomerModel model;
 
   private Picture thePicture = new Picture(80,80);
   private StockReader theStock   = null;
@@ -89,7 +93,7 @@ public class CustomerView implements Observer
     
     
 
-    theBtClear.setBounds( 16, 25+60*1, 80, 40 );    // Clear button
+    theBtClear.setBounds( 16, 25+60*2, 80, 40 );    // Clear button
     theBtClear.addActionListener(                   // Call back code
       e -> cont.doClear() );
     cp.add( theBtClear );                           //  Add to canvas
@@ -111,7 +115,7 @@ public class CustomerView implements Observer
     theSP.getViewport().add( theOutput );           //  In TextArea
     theOutput.setBackground(new Color(242, 229, 191)); // Colour (Beige)
     
-    thePicture.setBounds( 16, 25+60*2, 80, 80 );   // Picture area
+    thePicture.setBounds( 16, 25+60*3, 80, 80 );   // Picture area
     cp.add( thePicture );                           //  Add to canvas
     thePicture.clear();
     
@@ -128,13 +132,20 @@ public class CustomerView implements Observer
   {
     cont = c;
   }
+  
+  public void setModel( CustomerModel m )
+  {
+    model = m;
+  }
+  
 
   /**
    * Update the view
    * @param modelC   The observed model
    * @param arg      Specific args 
    */
-   
+ 
+  /*
   public void update( Observable modelC, Object arg )
   {
     CustomerModel model  = (CustomerModel) modelC;
@@ -150,5 +161,35 @@ public class CustomerView implements Observer
     theOutput.setText( model.getBasket().getDetails() );
     theInput.requestFocus();               // Focus is here
   }
-
 }
+ */
+
+
+
+@Override
+public void propertyChange(PropertyChangeEvent evt) {
+	String proName = evt.getPropertyName();
+	String oldValue = (String) evt.getOldValue();
+	String newValue = (String) evt.getNewValue();
+	theAction.setText(newValue);
+	switch(proName) {
+	case "doCheck":
+		ImageIcon image = model.getPicture();
+		if ( image == null )
+	    {
+	      thePicture.clear();                  // Clear picture
+	    } else {
+	      thePicture.set( image );             // Display picture
+	    }
+	    theOutput.setText( model.getBasket().getDetails() );
+	    theInput.requestFocus();               // Focus is here
+	    
+		break;
+		
+	case "doClear":
+		thePicture.clear(); 
+		break;
+	}
+ }
+}
+

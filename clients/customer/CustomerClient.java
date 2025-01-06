@@ -35,8 +35,10 @@ public class CustomerClient
     CustomerView  view  = new CustomerView( window, mf, 0, 0 );
     CustomerController cont  = new CustomerController( model, view );
     view.setController( cont );
+    view.setModel( model );
 
-    model.addObserver( view );       // Add observer to the model
+    //model.addObserver( view );       // Add observer to the model
+    model.addListener(view);
     window.setVisible(true);         // Display Scree
   }
 }

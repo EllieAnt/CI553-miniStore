@@ -62,8 +62,10 @@ class Main
     CustomerView view        = new CustomerView( window, mlf, pos.width, pos.height );
     CustomerController cont  = new CustomerController( model, view );
     view.setController( cont );
+    view.setModel( model );
 
-    model.addObserver( view );       // Add observer to the model, ---view is observer, model is Observable
+    //model.addObserver( view );       // Add observer to the model, ---view is observer, model is Observable
+    model.addListener(view);
     window.setVisible(true);         // start Screen
   }
 

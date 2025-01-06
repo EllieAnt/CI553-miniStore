@@ -9,12 +9,15 @@ import middle.StockException;
 import middle.StockReader;
 
 import javax.swing.*;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Observable;
 
 /**
  * Implements the Model of the customer client
  */
-public class CustomerModel extends Observable
+public class CustomerModel //extends Observable
 {
   private Product     theProduct = null;          // Current product
   private Basket      theBasket  = null;          // Bought items
@@ -24,6 +27,8 @@ public class CustomerModel extends Observable
   private StockReader     theStock     = null;
   private OrderProcessing theOrder     = null;
   private ImageIcon       thePic       = null;
+  private PropertyChangeSupport pcs;
+  private PropertyChangeSupport pcl; // idk
 
   /*
    * Construct the model of the Customer
@@ -40,7 +45,13 @@ public class CustomerModel extends Observable
                   "Database not created?\n%s\n", e.getMessage() );
     }
     theBasket = makeBasket();                    // Initial Basket
+    pcs = new PropertyChangeSupport(this);
   }
+  
+  public void addListener(PropertyChangeListener pcl) {
+	  pcs.addPropertyChangeListener(pcl);
+  }
+  
   
   /**
    * return the Basket of products
@@ -90,7 +101,8 @@ public class CustomerModel extends Observable
       DEBUG.error("CustomerClient.doCheck()\n%s",
       e.getMessage() );
     }
-    setChanged(); notifyObservers(theAction);
+    //setChanged(); notifyObservers(theAction);
+    pcs.firePropertyChange("doCheck", "", theAction);
   }
 
   /**
@@ -102,7 +114,9 @@ public class CustomerModel extends Observable
     theBasket.clear();                        // Clear s. list
     theAction = "Enter Product Number";       // Set display
     thePic = null;                            // No picture
-    setChanged(); notifyObservers(theAction);
+    //setChanged(); notifyObservers(theAction);
+    pcs.firePropertyChange("doClear", "", theAction);
+    
   }
   
   /**
@@ -117,10 +131,12 @@ public class CustomerModel extends Observable
   /**
    * ask for update of view callled at start
    */
+  /*
   private void askForUpdate()
   {
     setChanged(); notifyObservers("START only"); // Notify
   }
+  */
 
   /**
    * Make a new Basket
