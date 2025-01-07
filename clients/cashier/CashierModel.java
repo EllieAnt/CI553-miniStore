@@ -6,6 +6,8 @@ import debug.DEBUG;
 import middle.*;
 import catalogue.BetterBasket;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Observable;
 
 /**
@@ -23,6 +25,7 @@ public class CashierModel extends Observable
 
   private StockReadWriter theStock     = null;
   private OrderProcessing theOrder     = null;
+ // private PropertyChangeSupport pcs;
 
   /**
    * Construct the model of the Cashier
@@ -40,8 +43,14 @@ public class CashierModel extends Observable
       DEBUG.error("CashierModel.constructor\n%s", e.getMessage() );
     }
     theState   = State.process;                  // Current state
+   // pcs = new PropertyChangeSupport(this); // idk
   }
   
+  /*
+  public void addListener(PropertyChangeListener pcl) {
+	  pcs.addPropertyChangeListener(pcl);
+  }
+  */
   /**
    * Get the Basket of products
    * @return basket
@@ -91,6 +100,7 @@ public class CashierModel extends Observable
       theAction = e.getMessage();
     }
     setChanged(); notifyObservers(theAction);
+    //pcs.firePropertyChange("doCheck", "", theAction);
   }
 
   /**
@@ -128,6 +138,7 @@ public class CashierModel extends Observable
     }
     theState = State.process;                   // All Done
     setChanged(); notifyObservers(theAction);
+   // pcs.firePropertyChange("doBuy", "", theAction);
   }
   
   /**
@@ -156,15 +167,18 @@ public class CashierModel extends Observable
     }
     theBasket = null;
     setChanged(); notifyObservers(theAction); // Notify
+    //pcs.firePropertyChange("doBought", "", theAction);
   }
 
   /**
    * ask for update of view callled at start of day
    * or after system reset
    */
-  public void askForUpdate()
+  
+  public void askForUpdate()  //####### could take out?
   {
     setChanged(); notifyObservers("Welcome");
+    //pcs.firePropertyChange("Welcome"); 
   }
   
   /**

@@ -39,6 +39,6 @@ public class CustomerClient
 
     //model.addObserver( view );       // Add observer to the model
     model.addListener(view);
-    window.setVisible(true);         // Display Scree
+    window.setVisible(true);         // Display Screen
   }
 }

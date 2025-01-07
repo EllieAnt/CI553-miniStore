@@ -1,12 +1,15 @@
 package clients.cashier;
 
 import catalogue.Basket;
+import clients.customer.CustomerModel;
 import middle.MiddleFactory;
 import middle.OrderProcessing;
 import middle.StockReadWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +18,8 @@ import java.util.Observer;
  * View of the model 
  */
 public class CashierView implements Observer
+//public class CashierView implements PropertyChangeListener
+
 {
   private static final int H = 375;       // Height of window pixels
   private static final int W = 500;       // Width  of window pixels
@@ -32,6 +37,7 @@ public class CashierView implements Observer
   private final JButton     theBtCheck = new JButton( CHECK );
   private final JButton     theBtBuy   = new JButton( BUY );
   private final JButton     theBtBought= new JButton( BOUGHT );
+  private CashierModel model;
 
   private StockReadWriter theStock     = null;
   private OrderProcessing theOrder     = null;
@@ -120,12 +126,18 @@ public class CashierView implements Observer
   {
     cont = c;
   }
+  
+  public void setModel( CustomerModel m )
+  {
+    model = m;
+  }
 
   /**
    * Update the view
    * @param modelC   The observed model
    * @param arg      Specific args 
    */
+  
   @Override
   public void update( Observable modelC, Object arg )
   {
@@ -144,5 +156,31 @@ public class CashierView implements Observer
     	buyQuantity.setText("1");
     }
   }
+
+ /* 
+  @Override
+  public void propertyChange(PropertyChangeEvent evt) {
+  	String proName = evt.getPropertyName();
+  	String oldValue = (String) evt.getOldValue();
+  	String newValue = (String) evt.getNewValue();
+  	theAction.setText(newValue);
+  	switch(proName) {
+  	case "doCheck":
+  		Basket basket = model.getBasket();
+  	    if ( basket == null )
+  	      theOutput.setText( "Customers order" );
+  	    else
+  	      theOutput.setText( basket.getDetails() );
+  	    
+  	    theInput.requestFocus();               // Focus is here
+  	    
+  		break;
+  		
+  	case "doBuy":
+  		theOutput.setText( basket.getDetails() );
+  		break;
+  	}
+   }
+*/  
 
 }

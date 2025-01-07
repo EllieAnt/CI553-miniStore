@@ -187,7 +187,8 @@ public void propertyChange(PropertyChangeEvent evt) {
 		break;
 		
 	case "doClear":
-		thePicture.clear(); 
+		thePicture.clear(); 		// clear picture 
+		theOutput.setText( null );  // clear text
 		break;
 	}
  }

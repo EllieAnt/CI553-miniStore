@@ -86,6 +86,7 @@ class Main
     view.setController( cont );
 
     model.addObserver( view );       // Add observer to the model
+    //model.addListener( view );
     window.setVisible(true);         // Make window visible
     model.askForUpdate();            // Initial display
   }
@@ -109,6 +110,7 @@ class Main
     view.setController( cont );
 
     model.addObserver( view );       // Add observer to the model
+   // model.addListener( view );
     window.setVisible(true);         // Make window visible
   }
   
@@ -130,6 +132,7 @@ class Main
     view.setController( cont );
 
     model.addObserver( view );       // Add observer to the model
+    //model.addListener( view);
     window.setVisible(true);         // Make window visible
   }
   
