@@ -110,7 +110,7 @@ class Main
     view.setController( cont );
 
     model.addObserver( view );       // Add observer to the model
-   // model.addListener( view );
+    //model.addListener( view );
     window.setVisible(true);         // Make window visible
   }
   
