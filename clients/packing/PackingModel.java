@@ -8,6 +8,8 @@ import middle.OrderException;
 import middle.OrderProcessing;
 import middle.StockReadWriter;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Observable;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -23,6 +25,11 @@ public class PackingModel extends Observable
   private String          theAction  = "";
   
   private StateOf         worker   = new StateOf();
+  
+  /*
+  private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+  private PropertyChangeSupport pcl; // idk
+  */
 
   /*
    * Construct the model of the warehouse Packing client
@@ -43,6 +50,8 @@ public class PackingModel extends Observable
     // Start a background check to see when a new order can be packed
     new Thread( () -> checkForNewOrder() ).start();
   }
+  
+
   
   
   /**
@@ -98,6 +107,7 @@ public class PackingModel extends Observable
             theAction = "";                  // 
           }
           setChanged(); notifyObservers(theAction);
+          //pcs.firePropertyChange("checkForNewOrder", "", theAction); // theAct to sb?
         }                                    // 
         Thread.sleep(2000);                  // idle
       } catch ( Exception e )
@@ -118,6 +128,11 @@ public class PackingModel extends Observable
   {
     return theBasket.get();
   }
+  /*
+  public void addListener(PropertyChangeListener pcl) {
+	  pcs.addPropertyChangeListener(pcl);
+  }
+  */
 
   /**
    * Process a packed Order
@@ -139,6 +154,7 @@ public class PackingModel extends Observable
         theAction = "No order";       //   Not packed order
       }
       setChanged(); notifyObservers(theAction);
+      //pcs.firePropertyChange("doPacked", "", theAction);
     }
     catch ( OrderException e )                // Error
     {                                         //  Of course
@@ -146,6 +162,7 @@ public class PackingModel extends Observable
                             e.getMessage() ); //  happen
     }
     setChanged(); notifyObservers(theAction);
+    //pcs.firePropertyChange("doPacked", "", theAction);
   }
 }
 

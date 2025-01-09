@@ -30,6 +30,12 @@ public class CustomerController
   }
   
  // Name
+  /**
+   * 
+   * @param CheckByName - can search items using name
+   * @author Ellie
+   * 
+   */
   public void doCheckByName(String name) {
 	  NameToNumber nameToNumber = new NameToNumber();
 	  String pn = nameToNumber.getNumberByName(nameToNumber, name);

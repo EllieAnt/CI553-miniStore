@@ -44,6 +44,7 @@ public class PackingClient
     view.setController( cont );
 
     model.addObserver( view );       // Add observer to the model
+    //model.addListener(view);
     window.setVisible(true);         // Display Screen
   }
 }

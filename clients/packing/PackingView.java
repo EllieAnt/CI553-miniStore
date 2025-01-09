@@ -1,11 +1,14 @@
 package clients.packing;
 
 import catalogue.Basket;
+import clients.customer.CustomerModel;
 import middle.MiddleFactory;
 import middle.OrderProcessing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +18,7 @@ import java.util.Observer;
  */
 
 public class PackingView implements Observer
+//public class PackingView implements PropertyChangeListener
 {
   private static final String PACKED = "Packed";
 
@@ -26,6 +30,7 @@ public class PackingView implements Observer
   private final JTextArea   theOutput  = new JTextArea();
   private final JScrollPane theSP      = new JScrollPane();
   private final JButton     theBtPack= new JButton( PACKED );
+  private CustomerModel model;
  
   private OrderProcessing theOrder     = null;
   
@@ -84,11 +89,17 @@ public class PackingView implements Observer
     cont = c;
   }
 
+  public void setModel( CustomerModel m )
+  {
+    model = m;
+  }
+  
   /**
    * Update the view
    * @param modelC   The observed model
    * @param arg      Specific args 
    */
+  
   @Override
   public void update( Observable modelC, Object arg )
   {
@@ -105,5 +116,25 @@ public class PackingView implements Observer
     }
   }
 
+  /*
+  @Override
+  public void propertyChange(PropertyChangeEvent evt) {
+	  String proName = evt.getPropertyName();
+	  String oldValue = (String) evt.getOldValue();
+	  String newValue = (String) evt.getNewValue();
+	  theAction.setText(newValue);
+	  switch(proName) {
+	  case "doPacked":
+		  Basket basket =  model.getBasket();
+		  if ( basket != null )
+		  {
+		    theOutput.setText( basket.getDetails() );
+		  } else {
+		    theOutput.setText("");
+		  }
+		  break;
+  }
+ }
+  */
 }
 
