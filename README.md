@@ -1,3 +1,26 @@
+# Mini-Store Coursework for CI553 Object Oriented Development and Testing
+
+Hand im date: 10/01/25 15:00
+
+
+
+
+
+
+
+I have left in unsuccessful attempts at additional code in comments.
+
+
+
+
+
+
+
+
+
+
+## Previous Notes:
+
 ###### CI553-miniStore, release for the 2024-CI553 cohort.
 ###### This is a deliberately convoluted legacy codebase for the CI553 coursework.
 ###### This version was simplified from catshop system of the previous year CW.
