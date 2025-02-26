@@ -1,8 +1,10 @@
 # Mini-Store Coursework for CI553 Object Oriented Development and Testing
 
-Hand im date: 10/01/25 15:00
+Hand in date: 10/01/25 15:00
 
-
+## Grade: 72/100 
+Feedback: "Good work throughout, including all required elements. Discussed many aspects of your improvements and additions in detail"
+(No rubric provided)
 
 
 
